@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>YASİR FIT OS TITAN 5X | DÜNYANIN EN GELİŞMİŞ SAVAŞ KARARGAHI</title>
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700,900&display=fallback">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/icheck-bootstrap/3.0.1/icheck-bootstrap.min.css">
+    
+    <style>
+        :root { 
+            --titan-red: #b71c1c; --titan-dark: #0a0a0a; --titan-gold: #ffb300; 
+            --panel-gradient: linear-gradient(145deg, #1a1a2e, #16213e, #0f3460);
+            --blood-gradient: linear-gradient(135deg, #d32f2f 0%, #9a0007 100%);
+            --neon-blue: #00d2ff; --glass-bg: rgba(255, 255, 255, 0.05);
+        }
+        
+        body { background: var(--titan-dark); font-family: 'Source Sans Pro', sans-serif; color: #e0e0e0; overflow-x: hidden; }
+        
+        /* 1. SCROLLBAR ÖZELLEŞTİRMESİ */
+        ::-webkit-scrollbar { width: 12px; height: 12px; }
+        ::-webkit-scrollbar-track { background: #111; border-left: 1px solid #333; }
+        ::-webkit-scrollbar-thumb { background: var(--titan-red); border-radius: 10px; border: 3px solid #111; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff5252; }
+
+        /* 2. ANA İSKELET VE YAPI */
+        .main-header { background: rgba(10, 10, 10, 0.95) !important; border-bottom: 1px solid #333 !important; backdrop-filter: blur(10px); }
+        .main-sidebar { background: #000 !important; box-shadow: 8px 0 30px rgba(0,0,0,0.9); border-right: 1px solid #222; }
+        .content-wrapper { background: #f0f2f5; border-radius: 40px 40px 0 0; margin-top: 10px; box-shadow: 0 -20px 50px rgba(0,0,0,0.8); padding-bottom: 80px; position: relative; z-index: 5; }
+
+        /* 3. BİTMEK BİLMEYEN GÜN SCROLLER'I */
+        .day-scroller-container { position: relative; padding: 20px 30px; background: white; border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); margin-bottom: 30px; }
+        .day-scroller { display: flex; overflow-x: auto; gap: 18px; padding-bottom: 15px; scroll-behavior: smooth; }
+        .day-scroller::-webkit-scrollbar { height: 8px; }
+        .day-item { min-width: 90px; height: 120px; background: #fff; border: 3px solid #e9ecef; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); color: #555; text-decoration: none !important; position: relative; overflow: hidden; }
+        .day-item::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: transparent; transition: 0.3s; }
+        .day-item:hover { transform: translateY(-10px); border-color: #ff9999; box-shadow: 0 15px 25px rgba(183, 28, 28, 0.2); }
+        .day-item:hover::before { background: var(--titan-red); }
+        .day-item.active { background: var(--blood-gradient); border-color: transparent; color: white; transform: scale(1.15) translateY(-5px); box-shadow: 0 20px 40px rgba(183, 28, 28, 0.5); z-index: 10; }
+        .day-item.active .day-label { color: rgba(255,255,255,0.8); }
+        .day-label { font-size: 0.85rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; transition: 0.3s; }
+        .day-number { font-size: 2.2rem; font-weight: 900; line-height: 1; }
+        .day-status-dot { width: 10px; height: 10px; border-radius: 50%; background: #28a745; position: absolute; bottom: 10px; box-shadow: 0 0 10px #28a745; }
+
+        /* 4. DEVASA KART SİSTEMLERİ */
+        .mega-card { border-radius: 30px; border: none; box-shadow: 0 15px 40px rgba(0,0,0,0.08); margin-bottom: 35px; transition: 0.4s; background: #fff; overflow: hidden; }
+        .mega-card:hover { transform: translateY(-8px); box-shadow: 0 25px 50px rgba(0,0,0,0.12); }
+        .mega-card-header { padding: 30px; border-bottom: 2px solid rgba(0,0,0,0.03); display: flex; justify-content: space-between; align-items: center; }
+        .mega-title { font-size: 1.6rem; font-weight: 900; letter-spacing: -0.5px; color: #222; margin: 0; text-transform: uppercase; }
+        
+        /* 5. GÜÇLÜ BUTONLAR VE FORMLAR */
+        .btn-titan { border-radius: 20px; padding: 22px 30px; font-weight: 900; font-size: 1.3rem; letter-spacing: 2px; text-transform: uppercase; transition: all 0.3s; position: relative; overflow: hidden; z-index: 1; }
+        .btn-titan::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.1); z-index: -1; transform: scaleY(0); transform-origin: bottom; transition: transform 0.3s; }
+        .btn-titan:hover::after { transform: scaleY(1); }
+        .btn-titan:active { transform: scale(0.96); }
+        .form-control-titan { height: 75px; font-size: 1.8rem; font-weight: 800; border-radius: 20px; text-align: center; border: 3px solid #eee; transition: 0.3s; box-shadow: inset 0 4px 10px rgba(0,0,0,0.05); }
+        .form-control-titan:focus { border-color: var(--titan-red); box-shadow: 0 0 20px rgba(183,28,28,0.2); outline: none; }
+
+        /* 6. SU VE İLERLEME BARLARI */
+        .progress-titan { height: 55px !important; border-radius: 30px; background: #e3f2fd; box-shadow: inset 0 5px 15px rgba(0,0,0,0.1); position: relative; overflow: visible !important; margin: 40px 0; }
+        .progress-bar-titan { font-size: 1.6rem; font-weight: 900; line-height: 55px; border-radius: 30px; background: linear-gradient(90deg, #007bff, #00d2ff); box-shadow: 0 5px 20px rgba(0, 123, 255, 0.5); text-shadow: 2px 2px 4px rgba(0,0,0,0.4); position: relative; }
+        .progress-marker { position: absolute; top: -35px; right: 0; background: #111; color: #fff; padding: 5px 15px; border-radius: 10px; font-size: 1rem; font-weight: bold; transform: translateX(50%); }
+        .progress-marker::after { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); border-width: 8px 8px 0; border-style: solid; border-color: #111 transparent transparent transparent; }
+
+        /* 7. BİLDİRİM VE SOHBET SİSTEMİ */
+        .chat-container { height: 600px; background: #f8f9fa; border-radius: 25px; display: flex; flex-direction: column; overflow: hidden; border: 2px solid #eee; }
+        .chat-messages { flex: 1; padding: 30px; overflow-y: auto; }
+        .msg-bubble { max-width: 80%; margin-bottom: 25px; position: relative; }
+        .msg-ai { float: left; clear: both; }
+        .msg-yasir { float: right; clear: both; }
+        .msg-text { padding: 20px 25px; border-radius: 25px; font-size: 1.25rem; line-height: 1.6; box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
+        .msg-ai .msg-text { background: #fff; border-top-left-radius: 5px; color: #333; border-left: 5px solid var(--titan-red); }
+        .msg-yasir .msg-text { background: var(--titan-red); border-top-right-radius: 5px; color: #fff; }
+        .msg-info { font-size: 0.9rem; color: #888; font-weight: bold; margin-bottom: 8px; }
+        .msg-ai .msg-info { text-align: left; margin-left: 10px; }
+        .msg-yasir .msg-info { text-align: right; margin-right: 10px; }
+        
+        /* 8. ÖZEL TABLOLAR VE LİSTELER */
+        .titan-table { width: 100%; border-collapse: separate; border-spacing: 0 15px; }
+        .titan-table th { background: transparent; color: #888; font-weight: 800; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; padding: 0 20px; border: none; }
+        .titan-table td { background: #fff; padding: 25px 20px; vertical-align: middle; border-top: 1px solid #eee; border-bottom: 1px solid #eee; transition: 0.3s; }
+        .titan-table tr td:first-child { border-left: 1px solid #eee; border-radius: 20px 0 0 20px; }
+        .titan-table tr td:last-child { border-right: 1px solid #eee; border-radius: 0 20px 20px 0; }
+        .titan-table tr:hover td { background: #fdfdfd; transform: scale(1.01); box-shadow: 0 10px 20px rgba(0,0,0,0.03); cursor: pointer; }
+        
+        /* 9. ANİMASYONLAR */
+        @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(183, 28, 28, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(183, 28, 28, 0); } 100% { box-shadow: 0 0 0 0 rgba(183, 28, 28, 0); } }
+        .pulse-btn { animation: pulse-red 2s infinite; }
+    </style>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed text-sm">
+<div class="wrapper">
+
+    <nav class="main-header navbar navbar-expand navbar-dark border-0 py-3 shadow-lg">
+        <ul class="navbar-nav align-items-center">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars fa-2x text-white"></i></a>
+            </li>
+            <li class="nav-item d-none d-md-flex ml-3">
+                <div class="bg-danger rounded-pill px-4 py-2 d-flex align-items-center font-weight-bold shadow">
+                    <i class="fas fa-satellite-dish mr-2 fa-spin"></i> OMEGA SİSTEMİ ÇEVRİMİÇİ
+                </div>
+            </li>
+            <li class="nav-item d-none d-lg-flex ml-3">
+                <span class="text-light font-weight-bold" style="font-size: 1.2rem; letter-spacing: 1px;">HEDEF TARİH: 28 NİSAN 2026</span>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto align-items-center">
+            <li class="nav-item mr-3 d-none d-md-block">
+                <div class="input-group">
+                    <input class="form-control border-0 bg-dark text-light" type="search" placeholder="Sistemde Ara (Egzersiz, Yemek)..." style="border-radius: 20px 0 0 20px; width: 250px;">
+                    <div class="input-group-append">
+                        <button class="btn btn-dark" style="border-radius: 0 20px 20px 0;"><i class="fas fa-search text-danger"></i></button>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown mr-2">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="fas fa-comments fa-2x text-light"></i>
+                    <span class="badge badge-danger navbar-badge" style="font-size: 12px; right: 0px; top: 0px;">4</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-xl dropdown-menu-right border-0 shadow-lg" style="border-radius: 20px; width: 350px;">
+                    <div class="bg-danger p-3 text-center rounded-top" style="border-radius: 20px 20px 0 0;">
+                        <h5 class="text-white font-weight-bold m-0">GELEN MESAJLAR</h5>
+                    </div>
+                    <div class="dropdown-divider m-0"></div>
+                    <a href="#" class="dropdown-item p-3">
+                        <div class="media">
+                            <img src="https://ui-avatars.com/api/?name=AI&background=000&color=fff" alt="AI Avatar" class="img-size-50 mr-3 img-circle shadow-sm">
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title font-weight-bold">Yapay Zeka Koç <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span></h3>
+                                <p class="text-sm text-muted mt-1">"Yasir, bugünkü Xoom planını hazırladım..."</p>
+                                <p class="text-sm text-muted mt-1"><i class="far fa-clock mr-1"></i> 5 dk önce</p>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item text-center font-weight-bold text-danger py-3">TÜM MESAJLARI AÇ</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown mr-3">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="fas fa-bell fa-2x text-warning"></i>
+                    <span class="badge badge-warning navbar-badge pulse-btn" style="font-size: 12px; right: 0px; top: 0px;">12</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-xl dropdown-menu-right border-0 shadow-lg" style="border-radius: 20px; width: 350px;">
+                    <div class="bg-warning p-3 text-center rounded-top" style="border-radius: 20px 20px 0 0;">
+                        <h5 class="text-dark font-weight-bold m-0"><i class="fas fa-exclamation-triangle mr-2"></i> KRİTİK UYARILAR</h5>
+                    </div>
+                    <a href="#" class="dropdown-item py-3 border-bottom">
+                        <i class="fas fa-tint text-primary mr-3 fa-2x align-middle"></i> 
+                        <span class="font-weight-bold">Su eksikliği tespit edildi!</span>
+                        <span class="float-right text-muted text-sm mt-1">Hemen İç</span>
+                    </a>
+                    <a href="#" class="dropdown-item py-3 border-bottom">
+                        <i class="fas fa-drumstick-bite text-danger mr-3 fa-2x align-middle"></i> 
+                        <span class="font-weight-bold">İftar protein hedefine ulaşılmadı.</span>
+                        <span class="float-right text-muted text-sm mt-1">Tamamla</span>
+                    </a>
+                    <a href="#" class="dropdown-item py-3">
+                        <i class="fas fa-wallet text-success mr-3 fa-2x align-middle"></i> 
+                        <span class="font-weight-bold">Bütçe %15 harcandı.</span>
+                        <span class="float-right text-muted text-sm mt-1">Normal</span>
+                    </a>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="modal" data-target="#ultraProfileModal" href="#" style="padding-right: 0;">
+                    <img src="https://ui-avatars.com/api/?name=Yasir&background=ff3b3b&color=fff&bold=true&size=128" class="img-circle elevation-3 border border-white" alt="User Image" style="width: 45px; margin-top: -10px;">
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <aside class="main-sidebar sidebar-dark-danger elevation-4">
+        
+        <a href="/" class="brand-link border-bottom border-dark py-4 text-center">
+            <span class="brand-text font-weight-bold text-white" style="font-size: 2rem; letter-spacing: -1px; text-shadow: 0 0 10px red;">YASİR FIT <span class="text-danger">OS</span></span>
+        </a>
+
+        <div class="sidebar">
+            <div class="user-panel mt-4 pb-4 mb-4 d-flex flex-column align-items-center border-bottom border-dark">
+                <div class="image mb-3 position-relative">
+                    <img src="https://ui-avatars.com/api/?name=Yasir&background=ff3b3b&color=fff&bold=true&size=256" class="img-circle elevation-3" alt="User Image" style="width: 100px; border: 4px solid #333;">
+                    <span class="position-absolute bottom-0 right-0 p-2 bg-success border border-dark rounded-circle" style="width: 20px; height: 20px;"></span>
+                </div>
+                <div class="info text-center w-100">
+                    <a href="#" class="d-block text-white font-weight-bold" style="font-size: 1.6rem; letter-spacing: 1px;">KOMUTAN YASİR</a>
+                    <p class="text-muted font-weight-bold mt-1 mb-0"><i class="fas fa-crosshairs text-danger mr-1"></i> GÜNCEL: {{ storage.profil.yasir_kilo }} KG</p>
+                    <p class="text-muted font-weight-bold"><i class="fas fa-flag-checkered text-success mr-1"></i> HEDEF: {{ storage.profil.hedef }} KG</p>
+                    
+                    <div class="progress mt-3 bg-dark mx-4" style="height: 10px; border-radius: 5px;">
+                        <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" style="width: {{ ilerleme }}%"></div>
+                    </div>
+                    <small class="text-muted font-weight-bold mt-1 d-block">%{{ ilerleme }} GÖREV TAMAMLANDI</small>
+                </div>
+            </div>
+
+            <nav class="mt-2 pb-5">
+                <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent nav-flat" data-widget="treeview" role="menu" data-accordion="false">
+                    
+                    <li class="nav-header text-uppercase text-muted font-weight-bold mb-2 pl-3" style="letter-spacing: 2px; font-size: 0.8rem;">MERKEZİ KARARGAH</li>
+                    
+                    <li class="nav-item mb-2">
+                        <a href="/?p=dashboard&gun={{ aktif_gun }}" class="nav-link py-3 {% if sayfa == 'dashboard' %}active bg-danger shadow-lg{% endif %}" style="border-radius: 15px;">
+                            <i class="nav-icon fas fa-meteor fa-2x mr-2"></i>
+                            <p class="text-bold text-lg">ANA EKRAN <span class="right badge badge-danger p-1">CANLI</span></p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item mb-2">
+                        <a href="/?p=sohbet&gun={{ aktif_gun }}" class="nav-link py-3 {% if sayfa == 'sohbet' %}active bg-danger shadow-lg{% endif %}" style="border-radius: 15px;">
+                            <i class="nav-icon fas fa-brain fa-2x mr-2 text-info"></i>
+                            <p class="text-bold text-lg">YAPAY ZEKA KOÇ</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-header text-uppercase text-muted font-weight-bold mb-2 mt-4 pl-3" style="letter-spacing: 2px; font-size: 0.8rem;">OPERASYON DETAYLARI</li>
+
+                    <li class="nav-item {% if sayfa == 'spor' %}menu-open{% endif %}">
+                        <a href="#" class="nav-link py-3 {% if sayfa == 'spor' %}active{% endif %}" style="border-radius: 15px;">
+                            <i class="nav-icon fas fa-dumbbell fa-2x mr-2 text-warning"></i>
+                            <p class="text-bold text-lg">XOOM SALONU <i class="right fas fa-angle-left"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview ml-4">
+                            <li class="nav-item"><a href="/?p=spor&gun={{ aktif_gun }}" class="nav-link py-2"><i class="fas fa-calendar-day nav-icon text-danger"></i><p class="font-weight-bold">Bugünün Antrenmanı</p></a></li>
+                            <li class="nav-item"><a href="#" class="nav-link py-2"><i class="fas fa-history nav-icon text-muted"></i><p class="font-weight-bold">Geçmiş Kayıtlar</p></a></li>
+                            <li class="nav-item"><a href="#" class="nav-link py-2"><i class="fas fa-chart-line nav-icon text-success"></i><p class="font-weight-bold">Güç İstatistikleri</p></a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item mt-2 {% if sayfa == 'beslenme' %}menu-open{% endif %}">
+                        <a href="#" class="nav-link py-3 {% if sayfa == 'beslenme' %}active{% endif %}" style="border-radius: 15px;">
+                            <i class="nav-icon fas fa-utensils fa-2x mr-2 text-success"></i>
+                            <p class="text-bold text-lg">DİYET MUTFAĞI <i class="right fas fa-angle-left"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview ml-4">
+                            <li class="nav-item"><a href="/?p=beslenme&gun={{ aktif_gun }}" class="nav-link py-2"><i class="fas fa-apple-alt nav-icon text-danger"></i><p class="font-weight-bold">Bugünün Menüsü</p></a></li>
+                            <li class="nav-item"><a href="#" class="nav-link py-2"><i class="fas fa-calculator nav-icon text-info"></i><p class="font-weight-bold">Makro Hesaplayıcı</p></a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item mt-2 mb-4">
+                        <a href="/?p=finans&gun={{ aktif_gun }}" class="nav-link py-3 {% if sayfa == 'finans' %}active bg-danger shadow-lg{% endif %}" style="border-radius: 15px;">
+                            <i class="nav-icon fas fa-wallet fa-2x mr-2 text-light"></i>
+                            <p class="text-bold text-lg">FİNANS MERKEZİ</p>
+                        </a>
+                    </li>
+
+                    <div class="mx-3 mt-5">
+                        <a href="#" class="btn btn-outline-danger btn-block font-weight-bold py-3" style="border-radius: 15px; border-width: 2px;"><i class="fas fa-power-off mr-2"></i> SİSTEMİ KAPAT</a>
+                    </div>
+
+                </ul>
+            </nav>
+        </div>
+    </aside>
+
+    <div class="content-wrapper">
+        
+        <div class="container-fluid pt-4 px-4">
+            <div class="d-flex justify-content-between align-items-end mb-3 px-2">
+                <h3 class="font-weight-bold text-dark m-0"><i class="fas fa-calendar-alt text-danger mr-2"></i> 68 GÜNLÜK HAREKAT TAKVİMİ</h3>
+                <span class="badge badge-dark p-2" style="font-size: 1rem;"><i class="fas fa-crosshairs text-danger mr-1"></i> BUGÜN: GÜN {{ aktif_gun }}</span>
+            </div>
+            
+            <div class="day-scroller-container">
+                <div class="day-scroller" id="omegaScroller">
+                    {% for i in "1234567" %}{% for j in "1234567890" %} 
+                    {% if forloop.parentloop.counter0|add:forloop.counter <= 68 %}
+                    <a href="/?gun={{ forloop.parentloop.counter0 }}{{ forloop.counter }}&p={{ sayfa }}" 
+                       class="day-item shadow-sm {% if aktif_gun == forloop.parentloop.counter0|add:forloop.counter|stringformat:'s' %}active{% endif %}" id="day-btn-{{ forloop.parentloop.counter0 }}{{ forloop.counter }}">
+                        <span class="day-label">GÜN</span>
+                        <span class="day-number">{{ forloop.parentloop.counter0 }}{{ forloop.counter }}</span>
+                        {% if forloop.parentloop.counter0|add:forloop.counter < aktif_gun|add:"0" %}
+                        <div class="day-status-dot bg-success"></div>
+                        {% elif forloop.parentloop.counter0|add:forloop.counter == aktif_gun|add:"0" %}
+                        <div class="day-status-dot bg-warning pulse-btn"></div>
+                        {% else %}
+                        <div class="day-status-dot bg-secondary shadow-none"></div>
+                        {% endif %}
+                    </a>
+                    {% endif %}
+                    {% endfor %}{% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <section class="content px-4 pb-5">
+            <div class="container-fluid">
+
+                {% if sayfa == 'dashboard' %}
+                
+                <div class="row">
+                    
+                    <div class="col-xl-4 col-lg-5 mb-4">
+                        <div class="mega-card bg-dark text-white h-100" style="background: var(--panel-gradient);">
+                            <div class="mega-card-header border-bottom border-secondary">
+                                <h3 class="mega-title text-white"><i class="fas fa-weight mr-2 text-warning"></i> SIKLET YÖNETİMİ</h3>
+                                <button class="btn btn-sm btn-outline-light rounded-pill"><i class="fas fa-history"></i> Geçmiş</button>
+                            </div>
+                            <div class="card-body text-center p-5 d-flex flex-column justify-content-center">
+                                <p class="text-uppercase text-muted font-weight-bold letter-spacing-2 mb-1">Sisteme Kayıtlı Son Ağırlık</p>
+                                <h1 class="display-1 font-weight-bold text-warning mb-0" style="text-shadow: 4px 4px 10px rgba(0,0,0,0.8);">{{ storage.profil.yasir_kilo }}<span style="font-size: 2rem;">kg</span></h1>
+                                
+                                <div class="bg-black p-3 rounded-lg mt-4 shadow-inner border border-secondary text-left">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span class="text-muted font-weight-bold">Başlangıç:</span>
+                                        <span class="text-white font-weight-bold">{{ storage.profil.baslangic }} kg</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <span class="text-muted font-weight-bold">Kalan Hedef:</span>
+                                        <span class="text-danger font-weight-bold">{{ storage.profil.yasir_kilo|add:"-90" }} kg ERİYECEK!</span>
+                                    </div>
+                                </div>
+                                
+                                <form action="/islem/" method="POST" class="mt-5 w-100">
+                                    <input type="hidden" name="gun" value="{{ aktif_gun }}"><input type="hidden" name="islem" value="kilo_set"><input type="hidden" name="p" value="dashboard">
+                                    <label class="text-left w-100 text-muted font-weight-bold ml-2 mb-2 text-uppercase">Yeni Tartı Sonucu (KG)</label>
+                                    <div class="input-group input-group-lg mb-4 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+                                        <div class="input-group-prepend"><span class="input-group-text bg-danger text-white border-0 px-4"><i class="fas fa-balance-scale-right fa-2x"></i></span></div>
+                                        <input type="number" step="0.1" name="kilo" class="form-control form-control-titan bg-white text-dark" placeholder="Örn: 108.5">
+                                    </div>
+                                    <button class="btn btn-danger btn-block btn-titan pulse-btn w-100"><i class="fas fa-upload mr-2"></i> VERİYİ SİSTEME YÜKLE</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-8 col-lg-7 mb-4">
+                        <div class="mega-card h-100" style="border-top: 10px solid #007bff !important;">
+                            <div class="mega-card-header">
+                                <h2 class="mega-title text-primary"><i class="fas fa-tint fa-lg mr-3 text-info"></i> HİDRASYON KONTROL MERKEZİ</h2>
+                                <span class="badge badge-primary p-3 shadow-sm" style="font-size: 1.3rem; border-radius: 15px;">HEDEF: 5000 ML</span>
+                            </div>
+                            
+                            <div class="card-body p-5">
+                                
+                                <div class="progress progress-titan">
+                                    <div class="progress-bar progress-bar-titan progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ su_yuzde }}%;">
+                                        {{ su_yuzde }}% 
+                                        {% if su_yuzde > 10 %} | ({{ su_ml }} ML) {% endif %}
+                                        <div class="progress-marker">{{ su_ml }} ML</div>
+                                    </div>
+                                </div>
+
+                                <div class="text-center mb-5 mt-2">
+                                    <h4 class="font-weight-bold text-dark">GÜNLÜK SU İHTİYACININ <span class="text-primary font-weight-900">%{{ su_yuzde }}</span> KISMI TAMAMLANDI</h4>
+                                    <p class="text-muted text-lg">İftardan sonra her 30 dakikada bir su tüketmeye özen göster Komutanım.</p>
+                                </div>
+
+                                <hr class="my-5 opacity-50">
+
+                                <h4 class="text-dark font-weight-bold mb-4 text-center letter-spacing-1">HIZLI TAKVİYE SİLAHLARI</h4>
+                                <div class="row px-2">
+                                    <div class="col-md-3 col-6 mb-4">
+                                        <form action="/islem/" method="POST" class="h-100">
+                                            <input type="hidden" name="gun" value="{{ aktif_gun }}"><input type="hidden" name="islem" value="su_ekle"><input type="hidden" name="miktar" value="200"><input type="hidden" name="p" value="dashboard">
+                                            <button class="btn btn-outline-info w-100 h-100 d-flex flex-column align-items-center justify-content-center p-4 shadow-sm" style="border-radius: 25px; border-width: 3px; transition: 0.3s;">
+                                                <i class="fas fa-glass-water fa-4x mb-3 text-info"></i>
+                                                <h3 class="font-weight-900 mb-0">200 ML</h3>
+                                                <span class="text-muted font-weight-bold mt-2 bg-light px-3 py-1 rounded-pill">1 Bardak</span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                    
+                                    <div class="col-md-4 col-6 mb-4">
+                                        <form action="/islem/" method="POST" class="h-100">
+                                            <input type="hidden" name="gun" value="{{ aktif_gun }}"><input type="hidden" name="islem" value="su_ekle"><input type="hidden" name="miktar" value="500"><input type="hidden" name="p" value="dashboard">
+                                            <button class="btn btn-info w-100 h-100 d-flex flex-column align-items-center justify-content-center p-4 shadow" style="border-radius: 25px; border: none; background: linear-gradient(145deg, #17a2b8, #138496);">
+                                                <i class="fas fa-bottle-water fa-4x mb-3 text-white"></i>
+                                                <h2 class="font-weight-900 mb-0 text-white">500 ML</h2>
+                                                <span class="text-light font-weight-bold mt-2 bg-dark px-3 py-1 rounded-pill opacity-75">Küçük Şişe</span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                    
+                                    <div class="col-md-5 col-12 mb-4">
+                                        <form action="/islem/" method="POST" class="h-100">
+                                            <input type="hidden" name="gun" value="{{ aktif_gun }}"><input type="hidden" name="islem" value="su_ekle"><input type="hidden" name="miktar" value="1000"><input type="hidden" name="p" value="dashboard">
+                                            <button class="btn btn-primary w-100 h-100 d-flex flex-column align-items-center justify-content-center p-4 shadow-lg position-relative overflow-hidden" style="border-radius: 25px; border: none; background: linear-gradient(135deg, #0056b3, #007bff); z-index: 1;">
+                                                <div class="position-absolute" style="top: -20px; right: -20px; font-size: 10rem; opacity: 0.1; z-index: -1;"><i class="fas fa-fire"></i></div>
+                                                <i class="fas fa-jug-detergent fa-5x mb-3 text-warning"></i>
+                                                <h1 class="font-weight-900 mb-0 text-white display-4" style="text-shadow: 2px 2px 0 #000;">1 LİTRE</h1>
+                                                <span class="text-dark font-weight-bold mt-2 bg-warning px-4 py-2 rounded-pill letter-spacing-2 mt-3"><i class="fas fa-bomb mr-2"></i>BÜYÜK TAARRUZ</span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                {% elif sayfa == 'sohbet' %}
+                
+                <div class="row">
+                    <div class="col-lg-4 mb-4">
+                        <div class="mega-card bg-dark text-white p-4 h-100" style="background: var(--blood-gradient);">
+                            <div class="text-center p-4">
+                                <div class="position-relative d-inline-block mb-4">
+                                    <i class="fas fa-robot text-white shadow-lg" style="font-size: 8rem; filter: drop-shadow(0 0 20px rgba(255,255,255,0.5));"></i>
+                                    <span class="position-absolute bg-success border border-white rounded-circle pulse-btn" style="width: 25px; height: 25px; bottom: 10px; right: -5px;"></span>
+                                </div>
+                                <h2 class="font-weight-900 letter-spacing-1">OMEGA AI <span class="text-warning">v3.0</span></h2>
+                                <p class="lead font-weight-bold mt-3 border-top border-bottom border-light py-3 opacity-75">TÜRKİYE'NİN GÜCÜ EMRİNDE KOMUTAN!</p>
+                            </div>
+                            <div class="px-3 mt-4">
+                                <h5 class="text-uppercase font-weight-bold mb-3"><i class="fas fa-server mr-2"></i> Sistem Durumu</h5>
+                                <div class="d-flex justify-content-between mb-2"><span>Mantık Motoru:</span> <span class="text-success font-weight-bold">AKTİF</span></div>
+                                <div class="d-flex justify-content-between mb-2"><span>Hedef Analizi:</span> <span class="text-warning font-weight-bold">HESAPLANIYOR</span></div>
+                                <div class="d-flex justify-content-between mb-2"><span>Motivasyon Seviyesi:</span> <span class="text-danger font-weight-bold">%100</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8 mb-4">
+                        <div class="mega-card chat-container shadow-lg">
+                            <div class="mega-card-header bg-white">
+                                <h3 class="mega-title text-danger"><i class="fas fa-comments mr-3"></i> OMEGA İLE CANLI BAĞLANTI</h3>
+                                <div class="card-tools">
+                                    <span title="3 Yeni Mesaj" class="badge bg-danger p-2 rounded-pill font-weight-bold">CANLI BAĞLANTI AKTİF</span>
+                                </div>
+                            </div>
+                            
+                            <div class="chat-messages" id="aiChatBox">
+                                
+                                {% for msg in sohbet %}
+                                
+                                    {% if msg.kim == 'AI' %}
+                                    <div class="msg-bubble msg-ai w-100">
+                                        <div class="msg-info">
+                                            <i class="fas fa-robot text-danger mr-1"></i> OMEGA KOÇ <span class="text-muted ml-2 font-weight-normal"><i class="far fa-clock"></i> {{ msg.zaman }}</span>
+                                        </div>
+                                        <div class="d-flex align-items-start">
+                                            <img src="https://ui-avatars.com/api/?name=AI&background=d32f2f&color=fff&rounded=true" alt="AI" class="img-circle shadow-sm mr-3" style="width: 50px;">
+                                            <div class="msg-text shadow-sm border border-light">
+                                                {{ msg.mesaj }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    <div class="msg-bubble msg-yasir w-100 d-flex flex-column align-items-end">
+                                        <div class="msg-info">
+                                            <span class="text-muted mr-2 font-weight-normal"><i class="far fa-clock"></i> {{ msg.zaman }}</span> KOMUTAN YASİR <i class="fas fa-user-ninja text-dark ml-1"></i>
+                                        </div>
+                                        <div class="d-flex align-items-start flex-row-reverse">
+                                            <img src="https://ui-avatars.com/api/?name=Yasir&background=000&color=fff&rounded=true" alt="Yasir" class="img-circle shadow-sm ml-3" style="width: 50px;">
+                                            <div class="msg-text shadow-lg font-weight-bold">
+                                                {{ msg.mesaj }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                
+                                {% endfor %}
+                                
+                                <div class="msg-bubble msg-ai w-100 mt-4" style="opacity: 0.5;">
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://ui-avatars.com/api/?name=AI&background=d32f2f&color=fff&rounded=true" alt="AI" class="img-circle mr-3" style="width: 30px;">
+                                        <div class="text-muted font-italic">Omega yazıyor... <i class="fas fa-pen text-danger ml-1"></i></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            
+                            <div class="card-footer bg-white border-top p-4">
+                                <form action="/islem/" method="POST">
+                                    <input type="hidden" name="gun" value="{{ aktif_gun }}"><input type="hidden" name="islem" value="sohbet_et"><input type="hidden" name="p" value="sohbet">
+                                    <div class="input-group input-group-lg shadow-sm" style="border-radius: 25px; overflow: hidden; border: 2px solid #e9ecef;">
+                                        <input type="text" name="mesaj" placeholder="Omega'ya Emir Ver veya Soru Sor... (Örn: Bugün Xoom'da ne var?)" class="form-control border-0 px-4 font-weight-bold text-dark" style="height: 70px; font-size: 1.3rem;" autocomplete="off" required>
+                                        <span class="input-group-append">
+                                            <button type="submit" class="btn btn-danger font-weight-bold px-5" style="border-radius: 0; font-size: 1.2rem; letter-spacing: 1px;"><i class="fas fa-paper-plane mr-2"></i> GÖNDER</button>
+                                        </span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+                {% elif sayfa == 'spor' %}
+                
+                <div class="row">
+                    <div class="col-xl-4 col-lg-5 mb-4">
+                        <div class="mega-card border-0 h-100 position-relative overflow-hidden" style="background: linear-gradient(to bottom, #d32f2f, #8e0000); color: white;">
+                            <i class="fas fa-dumbbell position-absolute" style="font-size: 20rem; opacity: 0.05; right: -50px; bottom: -50px; transform: rotate(-20deg);"></i>
+                            
+                            <div class="card-body p-5 text-center position-relative z-index-1">
+                                <div class="bg-white rounded-circle d-inline-flex align-items-center justify-content-center shadow-lg mb-4" style="width: 120px; height: 120px;">
+                                    <i class="fas fa-fire fa-4x text-danger pulse-btn"></i>
+                                </div>
+                                <h2 class="font-weight-900 text-uppercase mb-1" style="letter-spacing: 3px; font-size: 2.2rem; text-shadow: 2px 2px 5px rgba(0,0,0,0.5);">{{ spor.ad }}</h2>
+                                <hr class="border-light opacity-25 my-4" style="border-width: 2px;">
+                                
+                                <div class="bg-black p-4 rounded-lg shadow-inner mb-4 border border-danger">
+                                    <h5 class="text-uppercase text-muted font-weight-bold mb-2 letter-spacing-1">Antrenman Modülü</h5>
+                                    <h3 class="text-warning font-weight-900 m-0">{{ spor.stil }}</h3>
+                                </div>
+                                
+                                <p class="lead mt-4 font-italic font-weight-bold" style="font-size: 1.3rem; line-height: 1.6;">
+                                    <i class="fas fa-quote-left text-warning opacity-50 mr-2"></i>
+                                    "O acı geçici, elde edeceğin 90 kiloluk o estetik fizik kalıcı. Xoom salonundaki aynalar sana yalan söylemez. Basmaya devam!"
+                                    <i class="fas fa-quote-right text-warning opacity-50 ml-2"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-8 col-lg-7 mb-4">
+                        <div class="mega-card h-100">
+                            <div class="mega-card-header bg-white py-4">
+                                <h3 class="mega-title text-dark m-0"><i class="fas fa-list-ul text-danger mr-3 fa-lg"></i> GÜNLÜK HAREKAT PLANI</h3>
+                                <button class="btn btn-outline-dark font-weight-bold rounded-pill px-4"><i class="fas fa-print mr-2"></i> LİSTEYİ YAZDIR</button>
+                            </div>
+                            
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="titan-table text-center mb-0">
+                                        <thead class="bg-light border-bottom border-gray">
+                                            <tr>
+                                                <th style="width: 10%" class="py-4">SIRA</th>
+                                                <th style="width: 35%" class="text-left py-4">MAKİNE / HAREKET</th>
+                                                <th style="width: 20%" class="py-4">SET X TEKRAR</th>
+                                                <th style="width: 35%" class="text-left py-4">KOÇ NOTU (BİYOMEKANİK)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for alet in spor.aletler %}
+                                            <tr class="shadow-sm">
+                                                <td>
+                                                    <span class="badge badge-danger shadow-sm d-flex align-items-center justify-content-center mx-auto" style="font-size: 1.3rem; width: 45px; height: 45px; border-radius: 50%;">{{ forloop.counter }}</span>
+                                                </td>
+                                                <td class="text-left">
+                                                    <h4 class="font-weight-bold text-dark m-0">{{ alet.ad }}</h4>
+                                                    <span class="text-muted text-sm"><i class="fas fa-check-circle text-success mr-1"></i> Hedef Kas Grubu Aktif</span>
+                                                </td>
+                                                <td>
+                                                    <div class="bg-dark text-white rounded-pill py-2 px-3 d-inline-block font-weight-bold" style="font-size: 1.2rem; border: 2px solid #555;">
+                                                        {{ alet.set }}
+                                                    </div>
+                                                </td>
+                                                <td class="text-left">
+                                                    <div class="bg-light p-3 rounded-lg border-left border-warning shadow-inner" style="border-left-width: 4px !important;">
+                                                        <i class="fas fa-exclamation-triangle text-warning mr-2"></i>
+                                                        <span class="font-italic text-dark font-weight-bold">{{ alet.hoca_notu }}</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {% empty %}
+                                            <tr>
+                                                <td colspan="4" class="text-center py-5">
+                                                    <div class="p-5">
+                                                        <i class="fas fa-bed fa-6x text-muted mb-4 opacity-50"></i>
+                                                        <h2 class="text-dark font-weight-900 letter-spacing-1">BUGÜN DİNLENME GÜNÜ</h2>
+                                                        <p class="lead text-muted mt-3">Kaslar çalışırken yırtılır, dinlenirken büyür. Vücuduna toparlanması için izin ver.</p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <div class="card-footer bg-white py-4 border-top border-light text-center">
+                                <button class="btn btn-light btn-lg text-danger font-weight-bold p-4 border-danger w-75 rounded-pill" style="border-style: dashed; border-width: 2px;" data-toggle="modal" data-target="#egzersizEkleModal">
+                                    <i class="fas fa-plus-circle fa-lg mr-2"></i> SİSTEM DIŞI EXTRA EGZERSİZ EKLE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% elif sayfa == 'beslenme' %}
+                
+                <div class="row mb-4">
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="mega-card bg-white p-4 text-center border-bottom border-success h-100" style="border-bottom-width: 8px !important;">
+                            <div class="macro-circle border-success text-success mb-3 shadow-sm" style="width: 100px; height: 100px; font-size: 1.8rem; border-width: 6px;">2200</div>
+                            <h4 class="font-weight-900 text-dark letter-spacing-1">KALORİ</h4>
+                            <span class="badge badge-success px-3 py-2 mt-2">GÜNLÜK LİMİT</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="mega-card bg-white p-4 text-center border-bottom border-danger h-100" style="border-bottom-width: 8px !important;">
+                            <div class="macro-circle border-danger text-danger mb-3 shadow-sm" style="width: 100px; height: 100px; font-size: 1.8rem; border-width: 6px;">180g</div>
+                            <h4 class="font-weight-900 text-dark letter-spacing-1">PROTEİN</h4>
+                            <span class="badge badge-danger px-3 py-2 mt-2">KAS İNŞASI</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="mega-card bg-white p-4 text-center border-bottom border-warning h-100" style="border-bottom-width: 8px !important;">
+                            <div class="macro-circle border-warning text-warning mb-3 shadow-sm" style="width: 100px; height: 100px; font-size: 1.8rem; border-width: 6px;">200g</div>
+                            <h4 class="font-weight-900 text-dark letter-spacing-1">KARB.</h4>
+                            <span class="badge badge-warning px-3 py-2 mt-2 text-dark">ENERJİ DEPOSU</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="mega-card bg-white p-4 text-center border-bottom border-info h-100" style="border-bottom-width: 8px !important;">
+                            <div class="macro-circle border-info text-info mb-3 shadow-sm" style="width: 100px; height: 100px; font-size: 1.8rem; border-width: 6px;">70g</div>
+                            <h4 class="font-weight-900 text-dark letter-spacing-1">YAĞ</h4>
+                            <span class="badge badge-info px-3 py-2 mt-2 text-white">HORMONAL DENGE</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mega-card shadow-lg mb-5">
+                    <div class="mega-card-header bg-success text-white py-4" style="background: linear-gradient(135deg, #28a745, #20c997);">
+                        <h2 class="mega-title text-white m-0"><i class="fas fa-utensils mr-3"></i> RAMAZAN ÖZEL DİYET PROTOKOLÜ</h2>
+                        <span class="badge badge-light text-success font-weight-bold p-2"><i class="fas fa-lock mr-1"></i> SIKI YÖNETİM</span>
+                    </div>
+                    
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="bg-light">
+                                    <tr class="text-center text-muted font-weight-bold text-uppercase letter-spacing-1">
+                                        <th style="width: 20%;" class="py-4 border-0">ZAMAN / ÖĞÜN</th>
+                                        <th style="width: 45%;" class="text-left py-4 border-0">İÇERİK VE GRAMAJLAR (HASSAS)</th>
+                                        <th style="width: 15%;" class="py-4 border-0">NET PROTEİN</th>
+                                        <th style="width: 20%;" class="py-4 border-0">OPERASYON DURUMU</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-bottom">
+                                        <td class="text-center align-middle bg-light">
+                                            <div class="p-3">
+                                                <i class="fas fa-moon text-dark mb-3" style="font-size: 3.5rem;"></i>
+                                                <h3 class="font-weight-900 letter-spacing-1 m-0">SAHUR</h3>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle p-4">
+                                            <ul class="list-unstyled mb-0" style="font-size: 1.2rem; line-height: 2;">
+                                                <li class="mb-2"><i class="fas fa-check-square text-success mr-3 fa-lg"></i> <span class="font-weight-bold text-dark">5 Adet Yumurta Beyazı</span> (Haşlanmış)</li>
+                                                <li class="mb-2"><i class="fas fa-check-square text-success mr-3 fa-lg"></i> <span class="font-weight-bold text-dark">100g Lor Peyniri</span> (Yağsız)</li>
+                                                <li class="mb-2"><i class="fas fa-check-square text-success mr-3 fa-lg"></i> <span class="font-weight-bold text-dark">1 Orta Boy Patates</span> (Kompleks Karb.)</li>
+                                                <li><i class="fas fa-check-square text-success mr-3 fa-lg"></i> <span class="font-weight-bold text-dark">Sınırsız Yeşillik</span> (Su tutulumu için)</li>
+                                            </ul>
+                                        </td>
+                                        <td class="text-center align-middle">
+                                            <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center mx-auto shadow" style="width: 70px; height: 70px; font-size: 1.5rem; font-weight: bold; border: 3px solid #fff; outline: 3px solid #28a745;">45g</div>
+                                        </td>
+                                        <td class="text-center align-middle p-4">
+                                            <button class="btn btn-outline-success font-weight-bold btn-block p-4 rounded-lg text-uppercase" style="font-size: 1.2rem; border-width: 2px;"><i class="fas fa-check-double mr-2"></i> YENDİ, ONAYLANDI</button>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr class="border-bottom">
+                                        <td class="text-center align-middle bg-light">
+                                            <div class="p-3">
+                                                <i class="fas fa-sun text-warning mb-3" style="font-size: 3.5rem;"></i>
+                                                <h3 class="font-weight-900 letter-spacing-1 m-0">İFTAR</h3>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle p-4">
+                                            <ul class="list-unstyled mb-0" style="font-size: 1.2rem; line-height: 2;">
+                                                <li class="mb-2"><i class="fas fa-chevron-circle-right text-warning mr-3 fa-lg"></i> <span class="font-weight-bold text-dark">1 Kase Mercimek</span> (Başlangıç)</li>
+                                                <li class="mb-2"><i class="fas fa-chevron-circle-right text-warning mr-3 fa-lg"></i> <span class="font-weight-bold text-dark">300g Izgara Tavuk Göğsü</span> (Temel İnşa)</li>
+                                                <li class="mb-2"><i class="fas fa-chevron-circle-right text-warning mr-3 fa-lg"></i> <span class="font-weight-bold text-dark">6 Kaşık Pirinç Pilavı</span> (Pump İçin)</li>
+                                                <li><i class="fas fa-chevron-circle-right text-warning mr-3 fa-lg"></i> <span class="font-weight-bold text-dark">1 Kase Ev Yoğurdu</span></li>
+                                            </ul>
+                                        </td>
+                                        <td class="text-center align-middle">
+                                            <div class="bg-warning text-dark rounded-circle d-flex align-items-center justify-content-center mx-auto shadow" style="width: 70px; height: 70px; font-size: 1.5rem; font-weight: bold; border: 3px solid #fff; outline: 3px solid #ffc107;">65g</div>
+                                        </td>
+                                        <td class="text-center align-middle p-4">
+                                            <button class="btn btn-warning font-weight-bold btn-block p-4 rounded-lg text-white text-uppercase pulse-btn" style="font-size: 1.2rem;"><i class="fas fa-hourglass-half mr-2"></i> ZAMANI BEKLİYOR</button>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="text-center align-middle bg-light">
+                                            <div class="p-3">
+                                                <i class="fas fa-bolt text-danger mb-3" style="font-size: 3.5rem;"></i>
+                                                <h3 class="font-weight-900 letter-spacing-1 m-0">ARA ÖĞÜN</h3>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle p-4">
+                                            <ul class="list-unstyled mb-0" style="font-size: 1.2rem; line-height: 2;">
+                                                <li class="mb-2"><i class="fas fa-chevron-circle-right text-danger mr-3 fa-lg"></i> <span class="font-weight-bold text-dark">1 Ölçek Whey Protein</span> (Antrenman Sonrası)</li>
+                                                <li class="mb-2"><i class="fas fa-chevron-circle-right text-danger mr-3 fa-lg"></i> <span class="font-weight-bold text-dark">30g Badem veya Ceviz</span> (Sağlıklı Yağ)</li>
+                                                <li><i class="fas fa-chevron-circle-right text-danger mr-3 fa-lg"></i> <span class="font-weight-bold text-dark">Filtre Kahve</span> (Yağ Yakımı İçin)</li>
+                                            </ul>
+                                        </td>
+                                        <td class="text-center align-middle">
+                                            <div class="bg-danger text-white rounded-circle d-flex align-items-center justify-content-center mx-auto shadow" style="width: 70px; height: 70px; font-size: 1.5rem; font-weight: bold; border: 3px solid #fff; outline: 3px solid #dc3545;">25g</div>
+                                        </td>
+                                        <td class="text-center align-middle p-4">
+                                            <button class="btn btn-outline-danger font-weight-bold btn-block p-4 rounded-lg text-uppercase" style="font-size: 1.2rem; border-width: 2px;"><i class="fas fa-lock mr-2"></i> KİLİTLİ</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                {% elif sayfa == 'finans' %}
+                
+                <div class="row">
+                    <div class="col-xl-4 mb-4">
+                        <div class="mega-card bg-info text-white p-5 text-center h-100 position-relative overflow-hidden" style="background: linear-gradient(135deg, #17a2b8, #0c5460);">
+                            <i class="fas fa-vault position-absolute" style="font-size: 15rem; right: -30px; bottom: -30px; opacity: 0.1;"></i>
+                            <div class="position-relative z-index-1">
+                                <h3 class="font-weight-900 letter-spacing-1 text-uppercase mb-4"><i class="fas fa-wallet mr-2"></i> TOPLAM CEPHANE (AYLIK)</h3>
+                                <h1 class="display-3 font-weight-bold mb-5 text-warning" style="text-shadow: 2px 2px 0 #000;">{{ storage.finans.aylik_butce }} ₺</h1>
+                                
+                                <div class="bg-white text-info p-4 rounded-lg shadow-lg mb-4 text-left border-left border-info" style="border-left-width: 5px !important;">
+                                    <span class="text-uppercase font-weight-bold text-muted" style="font-size: 0.9rem;">ŞU ANA KADAR HARCANAN</span>
+                                    <h2 class="mb-0 font-weight-900 text-danger mt-1"><i class="fas fa-arrow-down mr-2"></i> {{ storage.finans.harcanan }} ₺</h2>
+                                </div>
+                                
+                                <div class="bg-dark text-white p-4 rounded-lg shadow-lg text-left border-left border-success" style="border-left-width: 5px !important;">
+                                    <span class="text-uppercase font-weight-bold text-muted" style="font-size: 0.9rem;">KALAN NET BÜTÇE</span>
+                                    <h2 class="mb-0 font-weight-900 text-success mt-1"><i class="fas fa-check-circle mr-2"></i> {{ storage.finans.aylik_butce|add:"-4250" }} ₺</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xl-8 mb-4">
+                        <div class="mega-card h-100">
+                            <div class="mega-card-header bg-white py-4 border-bottom">
+                                <h3 class="mega-title text-dark"><i class="fas fa-cash-register text-info mr-3"></i> YENİ HARCAMA BİLDİRİMİ</h3>
+                            </div>
+                            <div class="card-body p-5">
+                                <form action="/update/" method="POST">
+                                    <input type="hidden" name="gun" value="{{ aktif_gun }}"><input type="hidden" name="islem" value="finans_ekle"><input type="hidden" name="p" value="finans">
+                                    
+                                    <div class="form-group mb-5">
+                                        <label class="text-muted font-weight-bold text-uppercase letter-spacing-1 mb-3" style="font-size: 1.1rem;">Harcama Kategorisi (Nereye Mermi Attın?)</label>
+                                        <select class="form-control" style="height: 70px; font-size: 1.3rem; border-radius: 15px; border: 2px solid #ddd; font-weight: bold; color: #444;">
+                                            <option>🛒 Market Alışverişi (Tavuk, Yumurta, Pirinç)</option>
+                                            <option>💊 Supplement (Protein Tozu, Kreatin)</option>
+                                            <option>🏋️ Xoom Salon Üyeliği / Yenileme</option>
+                                            <option>🧤 Spor Ekipmanı (Eldiven, Kemer, Ayakkabı)</option>
+                                            <option>🍔 Dışarıda Yemek / Serbest Öğün (Ödül)</option>
+                                            <option>⚠️ Diğer Giderler</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group mb-5">
+                                        <label class="text-muted font-weight-bold text-uppercase letter-spacing-1 mb-3" style="font-size: 1.1rem;">Tutar (TL)</label>
+                                        <div class="input-group shadow-sm" style="border-radius: 15px; overflow: hidden; border: 2px solid #ddd;">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-light border-0 px-4"><i class="fas fa-lira-sign fa-2x text-danger"></i></span>
+                                            </div>
+                                            <input type="number" name="tutar" class="form-control border-0" style="height: 80px; font-size: 2rem; font-weight: 900; color: #d32f2f;" placeholder="0.00" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <button class="btn btn-info btn-block btn-titan mt-4 text-white" style="background: linear-gradient(90deg, #17a2b8, #117a8b); border: none;">
+                                        <i class="fas fa-plus-circle fa-lg mr-2"></i> HARCAMAYI KAYDET VE BÜTÇEYİ GÜNCELLE
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mega-card mt-2">
+                    <div class="mega-card-header border-bottom bg-light py-4">
+                        <h3 class="mega-title text-dark m-0"><i class="fas fa-history text-muted mr-3"></i> SON FİNANSAL HAREKETLER (LOGLAR)</h3>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover mb-0 text-center" style="font-size: 1.2rem;">
+                                <thead class="bg-dark text-white font-weight-bold text-uppercase letter-spacing-1">
+                                    <tr>
+                                        <th class="py-4 border-0">İŞLEM TARİHİ</th>
+                                        <th class="py-4 border-0">KATEGORİ</th>
+                                        <th class="py-4 border-0 text-left">AÇIKLAMA / DETAY</th>
+                                        <th class="py-4 border-0 text-right pr-5">TUTAR</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="align-middle font-weight-bold text-muted">23 Şub 2026</td>
+                                        <td class="align-middle"><span class="badge badge-primary px-3 py-2" style="font-size: 1rem; border-radius: 10px;">MARKET</span></td>
+                                        <td class="align-middle text-left font-weight-bold">Migros Tavuk Göğsü Toplu Alım (10 KG)</td>
+                                        <td class="align-middle text-right pr-5 font-weight-900 text-danger" style="font-size: 1.4rem;">- 1,250 ₺</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle font-weight-bold text-muted">20 Şub 2026</td>
+                                        <td class="align-middle"><span class="badge badge-warning text-dark px-3 py-2" style="font-size: 1rem; border-radius: 10px;">SUPPLEMENT</span></td>
+                                        <td class="align-middle text-left font-weight-bold">Hardline Whey 3 Matrix 2300g (Çilekli)</td>
+                                        <td class="align-middle text-right pr-5 font-weight-900 text-danger" style="font-size: 1.4rem;">- 1,800 ₺</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle font-weight-bold text-muted">15 Şub 2026</td>
+                                        <td class="align-middle"><span class="badge badge-info px-3 py-2" style="font-size: 1rem; border-radius: 10px;">XOOM SALON</span></td>
+                                        <td class="align-middle text-left font-weight-bold">Aylık VIP Üyelik Yenileme Ücreti</td>
+                                        <td class="align-middle text-right pr-5 font-weight-900 text-danger" style="font-size: 1.4rem;">- 1,200 ₺</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                {% endif %}
+                
+            </div></section>
+    </div></div><div class="modal fade" id="ultraProfileModal" tabindex="-1" role="dialog" aria-labelledby="ultraProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content shadow-lg border-0" style="border-radius: 30px; overflow: hidden;">
+            
+            <div class="modal-header text-white p-5 position-relative" style="background: linear-gradient(135deg, #111, #333); border-bottom: 5px solid var(--titan-red);">
+                <i class="fas fa-cogs position-absolute" style="font-size: 15rem; right: -20px; top: -30px; opacity: 0.1;"></i>
+                <div class="d-flex align-items-center position-relative z-index-1">
+                    <img src="https://ui-avatars.com/api/?name=Yasir&background=ff3b3b&color=fff&bold=true&size=128" class="img-circle border border-white shadow mr-4" style="width: 80px;">
+                    <div>
+                        <h2 class="modal-title font-weight-900 m-0 letter-spacing-1" id="ultraProfileModalLabel">SİSTEM ÇEKİRDEK AYARLARI</h2>
+                        <p class="text-muted m-0 font-weight-bold mt-1"><i class="fas fa-shield-alt text-success mr-1"></i> Admin Yetkisi Doğrulandı</p>
+                    </div>
+                </div>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" style="font-size: 2.5rem; opacity: 1;"><span aria-hidden="true">&times;</span></button>
+            </div>
+            
+            <div class="modal-body p-5 bg-light">
+                <form>
+                    <h4 class="font-weight-bold text-dark mb-4 border-bottom pb-2"><i class="fas fa-user-ninja text-danger mr-2"></i> Biyolojik Veriler</h4>
+                    <div class="row mb-5">
+                        <div class="col-md-4 form-group">
+                            <label class="text-muted font-weight-bold text-uppercase">Sistem Yetkilisi</label>
+                            <input type="text" class="form-control font-weight-bold" style="height: 60px; font-size: 1.2rem; border-radius: 15px;" value="KOMUTAN YASİR" readonly>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label class="text-muted font-weight-bold text-uppercase">Nihai Hedef Sıklet</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control font-weight-bold text-danger" style="height: 60px; font-size: 1.5rem; border-radius: 15px 0 0 15px;" value="{{ storage.profil.hedef }}">
+                                <div class="input-group-append"><span class="input-group-text bg-white font-weight-bold" style="border-radius: 0 15px 15px 0;">KG</span></div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label class="text-muted font-weight-bold text-uppercase">Başlangıç Sıkleti</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control font-weight-bold text-muted" style="height: 60px; font-size: 1.5rem; border-radius: 15px 0 0 15px;" value="{{ storage.profil.baslangic }}" readonly>
+                                <div class="input-group-append"><span class="input-group-text bg-white font-weight-bold" style="border-radius: 0 15px 15px 0;">KG</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4 class="font-weight-bold text-dark mb-4 border-bottom pb-2 mt-4"><i class="fas fa-fire-alt text-warning mr-2"></i> Günlük Hedef Kotaları</h4>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label class="text-muted font-weight-bold text-uppercase">Günlük Kalori Limiti</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text bg-warning text-dark border-0" style="border-radius: 15px 0 0 15px;"><i class="fas fa-fire"></i></span></div>
+                                <input type="number" class="form-control font-weight-bold" style="height: 60px; font-size: 1.3rem; border-radius: 0 15px 15px 0;" value="2200">
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label class="text-muted font-weight-bold text-uppercase">Günlük Hidrasyon Hedefi</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text bg-primary text-white border-0" style="border-radius: 15px 0 0 15px;"><i class="fas fa-tint"></i></span></div>
+                                <input type="number" class="form-control font-weight-bold" style="height: 60px; font-size: 1.3rem; border-radius: 0 15px 15px 0;" value="5000">
+                                <div class="input-group-append"><span class="input-group-text bg-white font-weight-bold border-0 ml-1" style="border-radius: 15px;">ML</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="modal-footer border-0 p-4 bg-white d-flex justify-content-between">
+                <button type="button" class="btn btn-light btn-lg font-weight-bold rounded-pill px-5" data-dismiss="modal" style="border: 2px solid #ddd;">İPTAL</button>
+                <button type="button" class="btn btn-danger btn-lg font-weight-bold rounded-pill px-5 shadow pulse-btn"><i class="fas fa-save mr-2"></i> ÇEKİRDEĞE KAYDET</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="egzersizEkleModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 25px;">
+            <div class="modal-header bg-danger text-white py-4" style="border-radius: 25px 25px 0 0;">
+                <h4 class="modal-title font-weight-bold m-0"><i class="fas fa-plus-circle mr-2"></i> YENİ EGZERSİZ TANIMLA</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body p-5">
+                <div class="form-group mb-4">
+                    <label class="text-muted font-weight-bold text-uppercase">Makine / Hareket Adı</label>
+                    <input type="text" class="form-control font-weight-bold" placeholder="Örn: Preacher Curl" style="height: 60px; font-size: 1.2rem; border-radius: 15px;">
+                </div>
+                <div class="form-group mb-4">
+                    <label class="text-muted font-weight-bold text-uppercase">Set x Tekrar</label>
+                    <input type="text" class="form-control font-weight-bold" placeholder="Örn: 4x12" style="height: 60px; font-size: 1.2rem; border-radius: 15px;">
+                </div>
+                <div class="form-group mb-5">
+                    <label class="text-muted font-weight-bold text-uppercase">Koç Notu (Opsiyonel)</label>
+                    <textarea class="form-control" rows="3" placeholder="Hareketin püf noktasını buraya yaz..." style="border-radius: 15px;"></textarea>
+                </div>
+                <button class="btn btn-dark btn-block btn-lg font-weight-bold rounded-pill shadow-lg p-3"><i class="fas fa-database mr-2"></i> LİSTEYE ENTEGRE ET</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // 1. Yatay Scroll Motoru (Fareyle Tut-Çek)
+        const slider = document.getElementById('omegaScroller');
+        let isDown = false; let startX; let scrollLeft;
+        
+        if(slider) {
+            slider.addEventListener('mousedown', (e) => { 
+                isDown = true; slider.classList.add('active'); 
+                startX = e.pageX - slider.offsetLeft; scrollLeft = slider.scrollLeft; 
+            });
+            slider.addEventListener('mouseleave', () => { isDown = false; slider.classList.remove('active'); });
+            slider.addEventListener('mouseup', () => { isDown = false; slider.classList.remove('active'); });
+            slider.addEventListener('mousemove', (e) => { 
+                if(!isDown) return; e.preventDefault(); 
+                const x = e.pageX - slider.offsetLeft; 
+                const walk = (x - startX) * 2.5; 
+                slider.scrollLeft = scrollLeft - walk; 
+            });
+            
+            // Aktif güne otomatik kaydırma
+            const activeDay = document.querySelector('.day-item.active');
+            if (activeDay) {
+                const scrollPos = activeDay.offsetLeft - (slider.offsetWidth / 2) + (activeDay.offsetWidth / 2);
+                slider.scrollTo({ left: scrollPos, behavior: 'smooth' });
+            }
+        }
+        
+        // 2. Yapay Zeka Sohbeti Her Zaman En Alta Odakla
+        var chatBox = $('#aiChatBox');
+        if(chatBox.length) { chatBox.scrollTop(chatBox[0].scrollHeight); }
+        
+        // 3. Form Gönderiminde Buton Kilitlenmesi (Çift Tıklamayı Önler)
+        $('form').on('submit', function() {
+            var btn = $(this).find('button[type="submit"], .btn-action, .btn-titan');
+            if(btn.length) {
+                btn.html('<i class="fas fa-spinner fa-spin mr-2"></i> İŞLENİYOR...');
+                btn.prop('disabled', true);
+            }
+        });
+    });
+</script>
+</body>
+</html>
