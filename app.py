@@ -11,6 +11,7 @@ from django.urls import path
 if not settings.configured:
     settings.configure(
         DEBUG=True,
+        ALLOWED_HOSTS=['*'],  # <-- SARI EKRANI YOK EDEN ZIRH DELİCİ KOD BURADA!
         SECRET_KEY='yasir-fit-os-omega-2x-master-key',
         ROOT_URLCONF=__name__,
         MIDDLEWARE=[
